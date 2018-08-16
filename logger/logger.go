@@ -6,7 +6,7 @@ import (
 	"net/mail"
 	"strings"
 
-	"github.com/qor/mailer"
+	"github.com/aghape/mailer"
 	gomail "gopkg.in/gomail.v2"
 )
 

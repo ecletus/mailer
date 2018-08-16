@@ -1,8 +1,8 @@
 package mailer
 
 import (
-	"github.com/qor/assetfs"
-	"github.com/qor/render"
+	"github.com/moisespsena/go-assetfs"
+	"github.com/aghape/render"
 )
 
 // SenderInterface sender's interface
@@ -28,12 +28,6 @@ func New(config *Config) *Mailer {
 	if config == nil {
 		config = &Config{}
 	}
-
-	if config.AssetFS == nil {
-		config.AssetFS = assetfs.AssetFS().NameSpace("mailer")
-	}
-
-	config.AssetFS.RegisterPath("app/views/mailers")
 
 	if config.Render == nil {
 		config.Render = render.New(nil)

@@ -2,7 +2,7 @@ package mailer
 
 import (
 	"github.com/moisespsena/template/html/template"
-	"github.com/qor/qor"
+	"github.com/aghape/aghape"
 )
 
 // Template email template

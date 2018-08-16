@@ -12,8 +12,8 @@ import (
 	gomail "gopkg.in/gomail.v2"
 
 	"github.com/jinzhu/configor"
-	"github.com/qor/mailer"
-	"github.com/qor/mailer/gomailer"
+	"github.com/aghape/mailer"
+	"github.com/aghape/mailer/gomailer"
 )
 
 var Mailer *mailer.Mailer
