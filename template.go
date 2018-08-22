@@ -2,7 +2,7 @@ package mailer
 
 import (
 	"github.com/moisespsena/template/html/template"
-	"github.com/aghape/aghape"
+	"github.com/aghape/core"
 )
 
 // Template email template
@@ -10,7 +10,7 @@ type Template struct {
 	Name    string
 	Layout  string
 	Data    interface{}
-	Context *qor.Context
+	Context *core.Context
 	funcs   *template.FuncValues
 }
 
