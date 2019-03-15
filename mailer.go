@@ -2,7 +2,7 @@ package mailer
 
 import (
 	"github.com/moisespsena/go-assetfs"
-	"github.com/aghape/render"
+	"github.com/ecletus/render"
 )
 
 // SenderInterface sender's interface

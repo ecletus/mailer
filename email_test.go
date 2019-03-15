@@ -5,7 +5,7 @@ import (
 	"net/mail"
 	"testing"
 
-	"github.com/aghape/mailer"
+	"github.com/ecletus/mailer"
 )
 
 func equalCheck(email1, email2 mailer.Email) error {

@@ -2,7 +2,7 @@ package mailer
 
 import (
 	"github.com/moisespsena/template/html/template"
-	"github.com/aghape/core"
+	"github.com/ecletus/core"
 )
 
 // Template email template

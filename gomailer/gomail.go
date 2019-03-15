@@ -1,7 +1,7 @@
 package gomailer
 
 import (
-	"github.com/aghape/mailer"
+	"github.com/ecletus/mailer"
 	gomail "gopkg.in/gomail.v2"
 )
 
