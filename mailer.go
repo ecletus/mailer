@@ -1,7 +1,7 @@
 package mailer
 
 import (
-	"github.com/moisespsena/go-assetfs"
+	"github.com/moisespsena-go/assetfs"
 	"github.com/ecletus/render"
 )
 
