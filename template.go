@@ -1,6 +1,7 @@
 package mailer
 
 import (
+	"github.com/moisespsena-go/os-common"
 	"github.com/moisespsena/template/html/template"
 	"github.com/ecletus/core"
 )
@@ -11,14 +12,11 @@ type Template struct {
 	Layout  string
 	Data    interface{}
 	Context *core.Context
-	funcs   *template.FuncValues
+	funcs   template.FuncValues
 }
 
 // Funcs set template's funcs
 func (tmpl Template) Funcs(funcMap... template.FuncMap) Template {
-	if tmpl.funcs == nil {
-		tmpl.funcs = &template.FuncValues{}
-	}
 	err := tmpl.funcs.Append(funcMap...)
 	if err != nil {
 		panic(err)
@@ -27,37 +25,41 @@ func (tmpl Template) Funcs(funcMap... template.FuncMap) Template {
 }
 
 // FuncsValues set template's funcs
-func (tmpl Template) FuncsValues(funcValues... *template.FuncValues) Template {
+func (tmpl Template) FuncsValues(funcValues... template.FuncValues) Template {
 	tmpl.funcs.AppendValues(funcValues...)
 	return tmpl
 }
 
 // Render render template
-func (mailer Mailer) Render(t Template) Email {
-	var email Email
-	var tmpl = mailer.Config.Render.Template().FuncValues(t.funcs)
+func (mailer Mailer) Render(t Template, langs ...string) (email Email, err error) {
+	var tmpl = mailer.Config.Render.Template().SetFuncValues(t.funcs)
 
 	if t.Layout != "" {
-		if result, err := tmpl.Layout(t.Layout+".text").Render(t.Name+".text", t.Data, t.Context); err == nil {
+		var result template.HTML
+		if result, err = tmpl.SetLayout(t.Layout+".text").Render(nil, t.Name+".text", t.Data, t.Context, langs...); err == nil {
 			email.Text = string(result)
 		}
-
-		if result, err := tmpl.Layout(t.Layout+".html").Render(t.Name+".html", t.Data, t.Context); err == nil {
+		if result, err = tmpl.SetLayout(t.Layout+".html").Render(nil, t.Name+".html", t.Data, t.Context, langs...); err == nil {
 			email.HTML = string(result)
-		} else if result, err := tmpl.Layout(t.Layout).Render(t.Name, t.Data, t.Context); err == nil {
+		} else if result, err = tmpl.SetLayout(t.Layout).Render(nil, t.Name, t.Data, t.Context, langs...); err == nil {
 			email.HTML = string(result)
 		}
 	} else {
-		if result, err := tmpl.Render(t.Name+".text", t.Data, t.Context); err == nil {
+		var result template.HTML
+		if result, err = tmpl.Render(nil, t.Name+".text", t.Data, t.Context, langs...); err == nil {
 			email.Text = string(result)
 		}
 
-		if result, err := tmpl.Render(t.Name+".html", t.Data, t.Context); err == nil {
+		if result, err = tmpl.Render(nil, t.Name+".html", t.Data, t.Context, langs...); err == nil {
 			email.HTML = string(result)
-		} else if result, err := tmpl.Render(t.Name, t.Data, t.Context); err == nil {
+		} else if result, err = tmpl.Render(nil, t.Name, t.Data, t.Context, langs...); err == nil {
 			email.HTML = string(result)
 		}
 	}
 
-	return email
+	if oscommon.IsNotFound(err) && (email.Text != "" || email.HTML != "") {
+		err = nil
+	}
+
+	return
 }
